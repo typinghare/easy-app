@@ -1,6 +1,6 @@
 {
   "name": "@typinghare/easy-app",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Build your application with ease.",
   "main": "src/index.js",
   "types": "./dist/index.d.ts",
@@ -12,6 +12,9 @@
     "name": "James Chan",
     "email": "jameschan312.cn@gmail.com"
   },
+  "files": [
+    "dist/**/*"
+  ],
   "devDependencies": {
     "@types/jest": "^29.5.11",
     "@types/node": "^20.10.7",
@@ -27,5 +30,9 @@
     "ts-jest": "^29.1.1",
     "typescript": "5.3.3"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@typinghare/extrum": "^2.1.0",
+    "@typinghare/stack-queue": "^0.1.1"
+  }
 }

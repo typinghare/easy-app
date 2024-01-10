@@ -9,8 +9,9 @@ export abstract class Manager extends ApplicationBased implements Initiable {
     /**
      * Uses a manager that is in the application creating this manager.
      * @param ManagerClass The class of the manager to use.
+     * @template T The manager class type.
      */
-    public use(ManagerClass: ManagerClass): Manager {
+    public use<T extends Manager>(ManagerClass: ManagerClass<T>): T {
         return this.application.getManager(ManagerClass)
     }
 
@@ -22,5 +23,6 @@ export abstract class Manager extends ApplicationBased implements Initiable {
 
 /**
  * Manager class type.
+ * <T>
  */
-export type ManagerClass = new (application: Application) => Manager
+export type ManagerClass<T extends Manager = Manager> = new (application: Application) => T

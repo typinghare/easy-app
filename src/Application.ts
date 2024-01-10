@@ -26,14 +26,15 @@ export class Application {
     /**
      * Gets a manager.
      * @param ManagerClass The class of the manager to get.
+     * @template T The manager class type.
      */
-    public getManager(ManagerClass: ManagerClass): Manager {
+    public getManager<T extends Manager>(ManagerClass: ManagerClass<T>): T {
         const manager = this.byManagerClass.get(ManagerClass)
         if (manager === undefined) {
             throw new ManagerNotFoundException(ManagerClass)
         }
 
-        return manager
+        return manager as T
     }
 }
 

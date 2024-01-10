@@ -4,6 +4,14 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+dependencies:
+  '@typinghare/extrum':
+    specifier: ^2.1.0
+    version: 2.1.0
+  '@typinghare/stack-queue':
+    specifier: ^0.1.1
+    version: 0.1.1
+
 devDependencies:
   '@types/jest':
     specifier: ^29.5.11
@@ -969,6 +977,14 @@ packages:
       '@typescript-eslint/types': 6.18.0
       eslint-visitor-keys: 3.4.3
     dev: true
+
+  /@typinghare/extrum@2.1.0:
+    resolution: {integrity: sha512-+XmoHn3tIP5vABzZeWrOe/jrWNd5FFmoM4AZfhvA1g/p/EKomQ8MTY50oKn/jqb28N+puIzKouw5s0zKLNIh8g==}
+    dev: false
+
+  /@typinghare/stack-queue@0.1.1:
+    resolution: {integrity: sha512-R8q5RkdTTtAAx8Bl5l9n9PiTvqQ/XA84mqIL0pYlgAb3W2uF+1LYSLVRbMY4Iemqpns/EW6n7y5+h+BL+z4jDQ==}
+    dev: false
 
   /@ungap/structured-clone@1.2.0:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
