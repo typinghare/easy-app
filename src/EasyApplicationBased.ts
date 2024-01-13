@@ -1,19 +1,19 @@
-import { Application } from './Application'
+import { EasyApplication } from './EasyApplication'
 
 /**
  * Application based.
  */
-export class ApplicationBased {
+export class EasyApplicationBased<A extends EasyApplication = EasyApplication> {
     /**
      * Creates an application based object.
      * @param application The application creating this object.
      */
-    public constructor(protected readonly application: Application) {}
+    public constructor(protected readonly application: A) {}
 
     /**
      * Returns the application creating this object
      */
-    public getApplication(): Application {
+    public getApplication(): A {
         return this.application
     }
 }

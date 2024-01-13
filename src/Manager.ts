@@ -1,11 +1,11 @@
-import { Application } from './Application'
+import { EasyApplication } from './EasyApplication'
 import { Initiable } from './Initiable'
-import { ApplicationBased } from './ApplicationBased'
+import { EasyApplicationBased } from './EasyApplicationBased'
 
 /**
  * Manager of an application.
  */
-export abstract class Manager extends ApplicationBased implements Initiable {
+export abstract class Manager extends EasyApplicationBased implements Initiable {
     /**
      * Uses a manager that is in the application creating this manager.
      * @param ManagerClass The class of the manager to use.
@@ -23,6 +23,6 @@ export abstract class Manager extends ApplicationBased implements Initiable {
 
 /**
  * Manager class type.
- * <T>
+ * @template T Concrete manager class.
  */
-export type ManagerClass<T extends Manager = Manager> = new (application: Application) => T
+export type ManagerClass<T extends Manager = Manager> = new (application: EasyApplication) => T

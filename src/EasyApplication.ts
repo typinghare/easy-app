@@ -1,14 +1,23 @@
 import { Manager, ManagerClass } from './Manager'
+import { Initiable } from './Initiable'
+import { Middleware, MiddlewareClass } from './Middleware'
 
 /**
  * The main application.
+ * @template M Middleware type.
  */
-export class Application {
+export class EasyApplication<M extends Middleware<any> = Middleware<any>> implements Initiable {
     /**
      * Mapping from manager classes to manager instances.
      * @private
      */
     private readonly byManagerClass = new Map<ManagerClass, Manager>()
+
+    /**
+     * Mapping from middleware classes to middleware instances.
+     * @private
+     */
+    private readonly byMiddlewareClass = new Map<MiddlewareClass<any, M>, M>()
 
     /**
      * Creates an application.
@@ -21,12 +30,19 @@ export class Application {
 
             this.byManagerClass.set(ManagerClass, manger)
         }
+
+        this.init()
     }
 
     /**
+     * Initializes this application.
+     */
+    public init(): void {}
+
+    /**
      * Gets a manager.
-     * @param ManagerClass The class of the manager to get.
-     * @template T The manager class type.
+     * @param ManagerClass The manager class to get.
+     * @template T The manager class.
      */
     public getManager<T extends Manager>(ManagerClass: ManagerClass<T>): T {
         const manager = this.byManagerClass.get(ManagerClass)
@@ -35,6 +51,19 @@ export class Application {
         }
 
         return manager as T
+    }
+
+    /**
+     * Registers a middleware to this application.
+     * @param MiddlewareClass The middleware class to register.
+     */
+    public registerMiddleware(MiddlewareClass: MiddlewareClass<any, M>): M {
+        const middleware: M = new MiddlewareClass(this)
+        middleware.init()
+
+        this.byMiddlewareClass.set(MiddlewareClass, middleware)
+
+        return middleware
     }
 }
 

@@ -2,7 +2,7 @@ import { Data, Metadata } from '@typinghare/extrum'
 import { Configuration } from './Configuration'
 
 /**
- * Configuration stack.
+ * Configuration stack. New configuration covers the old configuration.
  */
 export class ConfigurationStack<C extends Data, M extends Metadata> {
     /**
@@ -41,7 +41,7 @@ export class ConfigurationStack<C extends Data, M extends Metadata> {
      * Returns the current configuration.
      */
     public getCurrentConfiguration(): Configuration<C, M> {
-        return this.currentConfiguration.clone()
+        return this.currentConfiguration
     }
 
     /**

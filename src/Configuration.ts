@@ -1,7 +1,7 @@
 import { Data, DataCollection, DataMapping, Datum, Metadata } from '@typinghare/extrum'
 
 /**
- * Application configuration.
+ * Easy application configuration is based on extrum.
  * @template C The config object type.
  * @link https://www.npmjs.com/package/@typinghare/extrum
  */
@@ -31,10 +31,6 @@ export class Configuration<C extends Data, M extends Metadata> extends DataColle
      * Clones this configuration, and return the clone.
      */
     public clone(): Configuration<C, M> {
-        return new Configuration(
-            this.map((datum) => {
-                return Datum.of(datum.value).setMetadata(datum.getMetadata())
-            })
-        ) as Configuration<C, M>
+        return new Configuration(this.map((datum) => datum.clone())) as Configuration<C, M>
     }
 }

@@ -1,4 +1,4 @@
-import { Application, Manager, ManagerNotFoundException } from '../src'
+import { EasyApplication, Manager, ManagerNotFoundException } from '../src'
 
 describe('Basic tests', () => {
     class UserManager extends Manager {}
@@ -7,7 +7,7 @@ describe('Basic tests', () => {
 
     class TransactionManager extends Manager {}
 
-    class MyApplication extends Application {
+    class MyApplication extends EasyApplication {
         public constructor() {
             super([UserManager, OrderManager])
         }
