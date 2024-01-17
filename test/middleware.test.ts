@@ -1,4 +1,4 @@
-import { Configuration, ConfigurationStack, EasyApplication } from '../src'
+import { EasyConfiguration, ConfigurationStack, EasyApplication } from '../src'
 import { Middleware } from '../src/Middleware'
 import { Datum, Metadata } from '@typinghare/extrum'
 
@@ -15,13 +15,13 @@ describe('Test middleware', () => {
 
             this.configurationStack = new ConfigurationStack<Config, Metadata>(
                 'Default',
-                new Configuration<Config, Metadata>({
+                new EasyConfiguration<Config, Metadata>({
                     name: Datum.of('0'),
                 })
             )
         }
 
-        public getConfiguration(): Configuration<Config, Metadata> {
+        public getConfiguration(): EasyConfiguration<Config, Metadata> {
             return this.configurationStack.getCurrentConfiguration()
         }
     }

@@ -1,4 +1,4 @@
-import { Configuration, ConfigurationNotFoundException, ConfigurationStack } from '../src'
+import { EasyConfiguration, ConfigurationNotFoundException, ConfigurationStack } from '../src'
 import { DatumCreator } from '@typinghare/extrum'
 
 describe('Basic tests', () => {
@@ -14,13 +14,13 @@ describe('Basic tests', () => {
 
     it('Test configuration stack', () => {
         const datumCreator = new DatumCreator({ description: '' })
-        const basicConfiguration = new Configuration<Config, ConfigMetadata>({
+        const basicConfiguration = new EasyConfiguration<Config, ConfigMetadata>({
             name: datumCreator.create('James Chan'),
             age: datumCreator.create(24),
             isCitizen: datumCreator.create(false),
         })
 
-        const userConfiguration = new Configuration<Config, ConfigMetadata>({
+        const userConfiguration = new EasyConfiguration<Config, ConfigMetadata>({
             name: datumCreator.create('Zhuojian Chen'),
             age: datumCreator.create(25),
             isCitizen: datumCreator.create(false),
