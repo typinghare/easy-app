@@ -5,7 +5,7 @@ import { Data, DataCollection, DataMapping, Datum, Metadata } from '@typinghare/
  * @template C The config object type.
  * @link https://www.npmjs.com/package/@typinghare/extrum
  */
-export class Configuration<C extends Data, M extends Metadata> extends DataCollection<C, M> {
+export class EasyConfiguration<C extends Data, M extends Metadata> extends DataCollection<C, M> {
     /**
      * Creates a configuration.
      * @param configMapping config mapping.
@@ -30,7 +30,7 @@ export class Configuration<C extends Data, M extends Metadata> extends DataColle
     /**
      * Clones this configuration, and return the clone.
      */
-    public clone(): Configuration<C, M> {
-        return new Configuration(this.map((datum) => datum.clone())) as Configuration<C, M>
+    public clone(): EasyConfiguration<C, M> {
+        return new EasyConfiguration(this.map((datum) => datum.clone())) as EasyConfiguration<C, M>
     }
 }

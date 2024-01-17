@@ -1,5 +1,5 @@
 import { Data, Metadata } from '@typinghare/extrum'
-import { Configuration } from './Configuration'
+import { EasyConfiguration } from './EasyConfiguration'
 
 /**
  * Configuration stack. New configuration covers the old configuration.
@@ -9,20 +9,20 @@ export class ConfigurationStack<C extends Data, M extends Metadata> {
      * Current configuration.
      * @private
      */
-    private readonly currentConfiguration: Configuration<C, M>
+    private readonly currentConfiguration: EasyConfiguration<C, M>
 
     /**
      * Mapping from names to configurations.
      * @private
      */
-    private readonly byName = new Map<string, Configuration<C, M>>()
+    private readonly byName = new Map<string, EasyConfiguration<C, M>>()
 
     /**
      * Creates a configuration stack.
      * @param name The name of the basic configuration.
      * @param configuration The basic configuration.
      */
-    public constructor(name: string, configuration: Configuration<C, M>) {
+    public constructor(name: string, configuration: EasyConfiguration<C, M>) {
         this.currentConfiguration = configuration.clone()
         this.byName.set(name, configuration)
     }
@@ -32,7 +32,7 @@ export class ConfigurationStack<C extends Data, M extends Metadata> {
      * @param name
      * @param configuration
      */
-    public push(name: string, configuration: Configuration<C, M>): void {
+    public push(name: string, configuration: EasyConfiguration<C, M>): void {
         this.byName.set(name, configuration)
         this.currentConfiguration.load(configuration.getData())
     }
@@ -40,7 +40,7 @@ export class ConfigurationStack<C extends Data, M extends Metadata> {
     /**
      * Returns the current configuration.
      */
-    public getCurrentConfiguration(): Configuration<C, M> {
+    public getCurrentConfiguration(): EasyConfiguration<C, M> {
         return this.currentConfiguration
     }
 
@@ -48,7 +48,7 @@ export class ConfigurationStack<C extends Data, M extends Metadata> {
      * Gets a configuration by a specific name.
      * @param name The name of the configuration to get.
      */
-    public getConfiguration(name: string): Configuration<C, M> {
+    public getConfiguration(name: string): EasyConfiguration<C, M> {
         const configuration = this.byName.get(name)
         if (configuration === undefined) {
             throw new ConfigurationNotFoundException(name)

@@ -5,7 +5,10 @@ import { EasyApplicationBased } from './EasyApplicationBased'
 /**
  * Manager of an application.
  */
-export abstract class Manager extends EasyApplicationBased implements Initiable {
+export abstract class Manager<A extends EasyApplication = EasyApplication>
+    extends EasyApplicationBased<A>
+    implements Initiable
+{
     /**
      * Uses a manager that is in the application creating this manager.
      * @param ManagerClass The class of the manager to use.
