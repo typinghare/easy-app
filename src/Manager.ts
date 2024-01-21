@@ -28,4 +28,6 @@ export abstract class Manager<A extends EasyApplication = EasyApplication>
  * Manager class type.
  * @template T Concrete manager class.
  */
-export type ManagerClass<T extends Manager = Manager> = new (application: EasyApplication) => T
+export type ManagerClass<T extends Manager = Manager, A extends EasyApplication = any> = new (
+    application: A
+) => T

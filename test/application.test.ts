@@ -1,15 +1,19 @@
 import { EasyApplication, Manager, ManagerNotFoundException } from '../src'
 
 describe('Basic tests', () => {
-    class UserManager extends Manager {}
+    class UserManager extends Manager<MyApplication> {}
 
-    class OrderManager extends Manager {}
+    class OrderManager extends Manager<MyApplication> {}
 
-    class TransactionManager extends Manager {}
+    class TransactionManager extends Manager<MyApplication> {}
 
     class MyApplication extends EasyApplication {
         public constructor() {
             super([UserManager, OrderManager])
+        }
+
+        public foo(): number {
+            return 0
         }
     }
 
