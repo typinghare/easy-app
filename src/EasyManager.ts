@@ -1,21 +1,21 @@
 import { EasyApplication } from './EasyApplication'
-import { Initiable } from './Initiable'
+import { EasyInitiable } from './EasyInitiable'
 import { EasyApplicationBased } from './EasyApplicationBased'
 
 /**
  * Manager of an application.
  */
-export abstract class Manager<A extends EasyApplication = EasyApplication>
+export abstract class EasyManager<A extends EasyApplication = EasyApplication>
     extends EasyApplicationBased<A>
-    implements Initiable
+    implements EasyInitiable
 {
     /**
      * Uses a manager that is in the application creating this manager.
      * @param ManagerClass The class of the manager to use.
      * @template T The manager class type.
      */
-    public use<T extends Manager>(ManagerClass: ManagerClass<T>): T {
-        return this.application.getManager(ManagerClass)
+    public use<T extends EasyManager>(ManagerClass: ManagerClass<T>): T {
+        return this.application.use(ManagerClass)
     }
 
     /**
@@ -28,6 +28,6 @@ export abstract class Manager<A extends EasyApplication = EasyApplication>
  * Manager class type.
  * @template T Concrete manager class.
  */
-export type ManagerClass<T extends Manager = Manager, A extends EasyApplication = any> = new (
+export type ManagerClass<T extends EasyManager = EasyManager, A extends EasyApplication = any> = new (
     application: A
 ) => T

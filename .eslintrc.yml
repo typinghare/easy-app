@@ -1,7 +1,9 @@
 env:
   commonjs: true
   es2021: true
-extends: standard-with-typescript
+extends:
+  - standard-with-typescript
+  - prettier
 parserOptions:
   ecmaVersion: latest
   project: [ './tsconfig.eslint.json' ]
@@ -9,7 +11,7 @@ rules:
   '@typescript-eslint/comma-dangle': 'off'
   'no-trailing-spaces': 'off'
   '@typescript-eslint/consistent-type-imports': 'off'
-  '@typescript-eslint/indent': [ 'error', 4 ]
+  '@typescript-eslint/indent': 'off'
   '@typescript-eslint/space-before-function-paren': 'off'
 plugins:
   - "eslint-plugin-prettier"

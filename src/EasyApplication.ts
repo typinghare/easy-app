@@ -1,17 +1,19 @@
-import { Manager, ManagerClass } from './Manager'
-import { Initiable } from './Initiable'
-import { Middleware, MiddlewareClass } from './Middleware'
+import { EasyManager, ManagerClass } from './EasyManager'
+import { EasyInitiable } from './EasyInitiable'
+import { EasyMiddleware, MiddlewareClass } from './EasyMiddleware'
 
 /**
  * The main application.
  * @template M Middleware type.
  */
-export class EasyApplication<M extends Middleware<any> = Middleware<any>> implements Initiable {
+export class EasyApplication<M extends EasyMiddleware<any> = EasyMiddleware<any>>
+    implements EasyInitiable
+{
     /**
      * Mapping from manager classes to manager instances.
      * @private
      */
-    private readonly byManagerClass = new Map<ManagerClass, Manager>()
+    private readonly byManagerClass = new Map<ManagerClass, EasyManager>()
 
     /**
      * Mapping from middleware classes to middleware instances.
@@ -30,8 +32,6 @@ export class EasyApplication<M extends Middleware<any> = Middleware<any>> implem
 
             this.byManagerClass.set(ManagerClass, manger)
         }
-
-        this.init()
     }
 
     /**
@@ -40,11 +40,11 @@ export class EasyApplication<M extends Middleware<any> = Middleware<any>> implem
     public init(): void {}
 
     /**
-     * Gets a manager.
-     * @param ManagerClass The manager class to get.
+     * Uses a manager.
+     * @param ManagerClass The manager class to use.
      * @template T The manager class.
      */
-    public getManager<T extends Manager>(ManagerClass: ManagerClass<T>): T {
+    public use<T extends EasyManager>(ManagerClass: ManagerClass<T>): T {
         const manager = this.byManagerClass.get(ManagerClass)
         if (manager === undefined) {
             throw new ManagerNotFoundException(ManagerClass)
@@ -54,13 +54,13 @@ export class EasyApplication<M extends Middleware<any> = Middleware<any>> implem
     }
 
     /**
-     * Registers a middleware to this application.
+     * Registers a middleware to this application. The middleware will be initialized before being
+     * returned.
      * @param MiddlewareClass The middleware class to register.
      */
     public registerMiddleware(MiddlewareClass: MiddlewareClass<any, M>): M {
         const middleware: M = new MiddlewareClass(this)
         middleware.init()
-
         this.byMiddlewareClass.set(MiddlewareClass, middleware)
 
         return middleware

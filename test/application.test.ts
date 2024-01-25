@@ -1,11 +1,11 @@
-import { EasyApplication, Manager, ManagerNotFoundException } from '../src'
+import { EasyApplication, EasyManager, ManagerNotFoundException } from '../src'
 
 describe('Basic tests', () => {
-    class UserManager extends Manager<MyApplication> {}
+    class UserManager extends EasyManager<MyApplication> {}
 
-    class OrderManager extends Manager<MyApplication> {}
+    class OrderManager extends EasyManager<MyApplication> {}
 
-    class TransactionManager extends Manager<MyApplication> {}
+    class TransactionManager extends EasyManager<MyApplication> {}
 
     class MyApplication extends EasyApplication {
         public constructor() {
@@ -19,14 +19,14 @@ describe('Basic tests', () => {
 
     it('Test application', () => {
         const application = new MyApplication()
-        expect(application.getManager(UserManager)).toBeInstanceOf(UserManager)
-        expect(application.getManager(OrderManager)).toBeInstanceOf(OrderManager)
+        expect(application.use(UserManager)).toBeInstanceOf(UserManager)
+        expect(application.use(OrderManager)).toBeInstanceOf(OrderManager)
         expect(() => {
-            application.getManager(TransactionManager)
+            application.use(TransactionManager)
         }).toThrow(ManagerNotFoundException)
 
         try {
-            application.getManager(TransactionManager)
+            application.use(TransactionManager)
         } catch (e) {
             expect((e as ManagerNotFoundException).getManagerClass()).toBe(TransactionManager)
         }
@@ -34,14 +34,15 @@ describe('Basic tests', () => {
 
     it('Test ApplicationBased', () => {
         const application = new MyApplication()
-        const userManager = application.getManager(UserManager)
+        const userManager = application.use(UserManager)
 
         expect(userManager.getApplication()).toBe(application)
+        expect(application.foo()).toBe(0)
     })
 
     it('Test manager use()', () => {
         const application = new MyApplication()
-        const userManager = application.getManager(UserManager)
+        const userManager = application.use(UserManager)
 
         expect(userManager.use(OrderManager)).toBeInstanceOf(OrderManager)
         expect(() => {

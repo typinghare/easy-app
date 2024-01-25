@@ -4,7 +4,7 @@ import { EasyConfiguration } from './EasyConfiguration'
 /**
  * Configuration stack. New configuration covers the old configuration.
  */
-export class ConfigurationStack<C extends Data, M extends Metadata> {
+export class EasyConfigurationStack<C extends Data, M extends Metadata> {
     /**
      * Current configuration.
      * @private

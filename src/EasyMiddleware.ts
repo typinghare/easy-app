@@ -1,13 +1,13 @@
 import { EasyApplicationBased } from './EasyApplicationBased'
 import { EasyApplication } from './EasyApplication'
-import { Initiable } from './Initiable'
+import { EasyInitiable } from './EasyInitiable'
 
 /**
  * Abstract middleware based on an application.
  */
-export abstract class Middleware<A extends EasyApplication>
+export abstract class EasyMiddleware<A extends EasyApplication>
     extends EasyApplicationBased<A>
-    implements Initiable {
+    implements EasyInitiable {
     /**
      * Initializes this middleware.
      */
@@ -21,5 +21,5 @@ export abstract class Middleware<A extends EasyApplication>
  */
 export type MiddlewareClass<
     A extends EasyApplication = EasyApplication,
-    T extends Middleware<A> = Middleware<A>,
+    T extends EasyMiddleware<A> = EasyMiddleware<A>,
 > = new (application: A) => T

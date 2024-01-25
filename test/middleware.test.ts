@@ -1,5 +1,5 @@
-import { EasyConfiguration, ConfigurationStack, EasyApplication } from '../src'
-import { Middleware } from '../src/Middleware'
+import { EasyConfigurationStack, EasyApplication, EasyConfiguration } from '../src'
+import { EasyMiddleware } from '../src/EasyMiddleware'
 import { Datum, Metadata } from '@typinghare/extrum'
 
 describe('Test middleware', () => {
@@ -7,13 +7,15 @@ describe('Test middleware', () => {
         name: string
     }
 
-    class MyApplication extends EasyApplication {
+    class Middleware extends EasyMiddleware<Application> {}
+
+    class Application extends EasyApplication<Middleware> {
         protected readonly configurationStack
 
         public constructor() {
             super([])
 
-            this.configurationStack = new ConfigurationStack<Config, Metadata>(
+            this.configurationStack = new EasyConfigurationStack<Config, Metadata>(
                 'Default',
                 new EasyConfiguration<Config, Metadata>({
                     name: Datum.of('0'),
@@ -26,15 +28,15 @@ describe('Test middleware', () => {
         }
     }
 
-    class CommonMiddleware extends Middleware<MyApplication> {
+    class CommonMiddleware extends Middleware {
         public override init(): void {
             const configuration = this.application.getConfiguration()
             configuration.getDatum('name').setValue('1')
         }
     }
 
-    it('', () => {
-        const application = new MyApplication()
+    it('Test middleware', () => {
+        const application = new Application()
         application.registerMiddleware(CommonMiddleware)
 
         expect(application.getConfiguration().getValue('name')).toBe('1')

@@ -1,4 +1,4 @@
-import { EasyConfiguration, ConfigurationNotFoundException, ConfigurationStack } from '../src'
+import { EasyConfiguration, ConfigurationNotFoundException, EasyConfigurationStack } from '../src'
 import { DatumCreator } from '@typinghare/extrum'
 
 describe('Basic tests', () => {
@@ -26,7 +26,7 @@ describe('Basic tests', () => {
             isCitizen: datumCreator.create(false),
         })
 
-        const configurationStack = new ConfigurationStack('basic', basicConfiguration)
+        const configurationStack = new EasyConfigurationStack('basic', basicConfiguration)
         configurationStack.push('user', userConfiguration)
 
         const currentConfiguration = configurationStack.getCurrentConfiguration()
