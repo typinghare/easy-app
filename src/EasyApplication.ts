@@ -1,4 +1,4 @@
-import { EasyManager, ManagerClass } from './EasyManager'
+import { EasyManager, EasyManagerClass } from './EasyManager'
 import { EasyInitiable } from './EasyInitiable'
 import { EasyMiddleware, MiddlewareClass } from './EasyMiddleware'
 
@@ -13,7 +13,7 @@ export class EasyApplication<M extends EasyMiddleware<any> = EasyMiddleware<any>
      * Mapping from manager classes to manager instances.
      * @private
      */
-    private readonly byManagerClass = new Map<ManagerClass, EasyManager>()
+    private readonly byManagerClass = new Map<EasyManagerClass, EasyManager>()
 
     /**
      * Mapping from middleware classes to middleware instances.
@@ -25,17 +25,18 @@ export class EasyApplication<M extends EasyMiddleware<any> = EasyMiddleware<any>
      * Creates an application.
      * @param managerClassList A list of manager classes that this application contains.
      */
-    public constructor(managerClassList: ManagerClass[]) {
+    public constructor(managerClassList: EasyManagerClass[]) {
         for (const ManagerClass of managerClassList) {
-            const manger = new ManagerClass(this)
-            manger.init()
+            const manager = new ManagerClass(this)
+            manager.init()
 
-            this.byManagerClass.set(ManagerClass, manger)
+            this.byManagerClass.set(ManagerClass, manager)
         }
     }
 
     /**
-     * Initializes this application.
+     * Initializes this application. Note that this function is not called when the application is
+     * instantiated.
      */
     public init(): void {}
 
@@ -44,7 +45,7 @@ export class EasyApplication<M extends EasyMiddleware<any> = EasyMiddleware<any>
      * @param ManagerClass The manager class to use.
      * @template T The manager class.
      */
-    public use<T extends EasyManager>(ManagerClass: ManagerClass<T>): T {
+    public use<T extends EasyManager>(ManagerClass: EasyManagerClass<T>): T {
         const manager = this.byManagerClass.get(ManagerClass)
         if (manager === undefined) {
             throw new ManagerNotFoundException(ManagerClass)
@@ -75,14 +76,14 @@ export class ManagerNotFoundException extends Error {
      * Creates a manager not found exception.
      * @param ManagerClass The manager class not found.
      */
-    public constructor(private readonly ManagerClass: ManagerClass) {
+    public constructor(private readonly ManagerClass: EasyManagerClass) {
         super(`Manager class not found: ${ManagerClass.name}`)
     }
 
     /**
      * Returns the manager class not found.
      */
-    public getManagerClass(): ManagerClass {
+    public getManagerClass(): EasyManagerClass {
         return this.ManagerClass
     }
 }

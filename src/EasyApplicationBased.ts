@@ -1,4 +1,5 @@
 import { EasyApplication } from './EasyApplication'
+import { EasyManager, EasyManagerClass } from './EasyManager'
 
 /**
  * Application based.
@@ -15,5 +16,14 @@ export class EasyApplicationBased<A extends EasyApplication = EasyApplication> {
      */
     public getApplication(): A {
         return this.application
+    }
+
+    /**
+     * Uses a manager that is in the application creating this manager.
+     * @param EasyManagerClass The class of the manager to use.
+     * @template T The manager class type.
+     */
+    public use<T extends EasyManager>(EasyManagerClass: EasyManagerClass<T>): T {
+        return this.application.use(EasyManagerClass)
     }
 }
